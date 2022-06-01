@@ -4,6 +4,8 @@ import AddProductForm from './components/AddProductForm';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import ProductsList from './components/ProductsList'
+import ProductsDetails from './components/ProductsDetails';
+import EditProducstForm from './components/EditProductsForm';
 
 const Routing = () => {
     return (
@@ -14,6 +16,8 @@ const Routing = () => {
             <Route path='/addProduct' element={<AddProductForm/>}/>
             <Route path='/products' element={<ProductsList/>}/>
             <Route path='/login' element={<LoginForm/>}/>
+            <Route path='/products/:id' element={<ProductsDetails/>}/>
+            <Route path='/edit/:id' element={<EditProducstForm />}/>
 
         </Routes>
         </BrowserRouter>

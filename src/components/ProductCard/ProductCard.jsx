@@ -1,27 +1,35 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
-import React from 'react';
-
+import React, { useContext } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useNavigate } from 'react-router-dom';
+import { productsContext } from '../../contexts/productsContext';
 const ProductCard = ({ item }) => {
+    const navigate = useNavigate()
+    const { deleteProduct } = useContext(productsContext)
     return (
         <Card sx={{ maxWidth: 300, margin: "20px" }}>
             <CardMedia
                 component="img"
                 height="140"
-                image="https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804__340.jpg"
+                image={item.image}
                 alt="green iguana"
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                    {item.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
+                    {item.description.length > 20 ? `${item.description.slice(0, 20)}...` : item.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+                <Button onClick={() => deleteProduct(item.id)} size="small"><DeleteIcon /></Button>
+                <Button size="small" onClick={() => navigate(`/edit/${item.id}`)}><EditIcon></EditIcon></Button>
+                <Button size="small" ><AddShoppingCartIcon></AddShoppingCartIcon></Button>
+                <Button size="small" onClick={() => navigate(`/products/${item.id}`)}><MoreHorizIcon></MoreHorizIcon></Button>
             </CardActions>
         </Card>
     );
