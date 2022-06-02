@@ -23,7 +23,7 @@ const EditProducstForm = () => {
             price,
             image
         }
-        if (!title.trim() || !description.trim() || !price.trim() || !image.trim()) {
+        if (!title.trim() || !description.trim() || !price || !image.trim()) {
             alert("заполните поля!")
             return
         }
@@ -65,9 +65,10 @@ const EditProducstForm = () => {
                 Edit product
             </Typography>
             <Box padding={'30px'} display={"flex"} flexDirection={"column"} >
+
                 <TextField value={title} onChange={(e) => setTitle(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Title" variant="standard" />
                 <TextField value={description} onChange={(e) => setDescription(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Description" variant="standard" />
-                <TextField value={price} onChange={(e) => setPrice(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Price" variant="standard" />
+                <TextField type="number" value={price} onChange={(e) => setPrice(+e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Price" variant="standard" />
                 <TextField value={image} onChange={(e) => setImage(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Image" variant="standard" />
                 <Button onClick={handleValues} variant="contained" color="success">
                     Save

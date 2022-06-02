@@ -10,7 +10,7 @@ const AddProductForm = () => {
     // console.log(createProduct);
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState("")
     const [image, setImage] = useState('')
 
     function handleValues() {
@@ -18,9 +18,10 @@ const AddProductForm = () => {
             title,
             description,
             price,
+            // price: +price,
             image
         }
-        if (!title.trim() || !description.trim() || !price.trim() || !image.trim()) {
+        if (!title.trim() || !description.trim() || !price || !image.trim()) {
             alert("заполните поля!")
             return
         }
@@ -29,7 +30,7 @@ const AddProductForm = () => {
         createProduct(newProduct)
         navigate("/products")
     }
-
+    console.log(typeof price);
     return (
         <Container maxWidth="sm">
             <Breadcrumbs aria-label="breadcrumb">
@@ -51,7 +52,7 @@ const AddProductForm = () => {
             <Box padding={'30px'} display={"flex"} flexDirection={"column"} >
                 <TextField value={title} onChange={(e) => setTitle(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Title" variant="standard" />
                 <TextField value={description} onChange={(e) => setDescription(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Description" variant="standard" />
-                <TextField value={price} onChange={(e) => setPrice(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Price" variant="standard" />
+                <TextField type="number" value={price} onChange={(e) => setPrice(+e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Price" variant="standard" />
                 <TextField value={image} onChange={(e) => setImage(e.target.value)} style={{ margin: "10px" }} id="standard-basic" label="Image" variant="standard" />
                 <Button onClick={handleValues} variant="contained" color="success">
                     Success

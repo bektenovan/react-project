@@ -6,12 +6,13 @@ const API = "http://localhost:8000/products"
 
 const INIT_STATE ={
     products: [],
-    oneProduct: null
+    oneProduct: null,
+    pages: 0
 }
 function reducer (state = INIT_STATE, action){
     switch(action.type){
         case "GET_PRODUCTS": 
-        return {...state, products: action.payload};
+        return {...state, products: action.payload.data, pages: Math.ceil( action.payload.headers['x-total-count']/3)} ;
         case "GET_ONE_PRODUCTS": 
         return {...state, oneProduct: action.payload};
         default: 
@@ -28,13 +29,16 @@ const [state, dispatch ]=  useReducer(reducer, INIT_STATE)
 
 
    async function getProducts(){
-      let res =   await axios(API)
+       console.log(`${API}${window.location.search}`);
+      let res =   await axios(`${API}${window.location.search}`)
       console.log(res);
+
       dispatch({
           type: "GET_PRODUCTS",
-          payload: res.data
+          payload: res
       })
     }
+console.log(state.pages);
 // console.log(state.products);
 
  async function deleteProduct(id){
@@ -58,6 +62,7 @@ async function updateProduct(id, editedProduct){
 return<productsContext.Provider value={{
     products: state.products,
     oneProduct: state.oneProduct,
+    pages: state.pages,
  createProduct, 
  getProducts,
  deleteProduct,

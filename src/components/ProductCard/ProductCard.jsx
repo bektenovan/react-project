@@ -24,6 +24,9 @@ const ProductCard = ({ item }) => {
                 <Typography variant="body2" color="text.secondary">
                     {item.description.length > 20 ? `${item.description.slice(0, 20)}...` : item.description}
                 </Typography>
+                <Typography gutterBottom variant="h5" component="div">
+                    {item.price}
+                </Typography>
             </CardContent>
             <CardActions>
                 <Button onClick={() => deleteProduct(item.id)} size="small"><DeleteIcon /></Button>
