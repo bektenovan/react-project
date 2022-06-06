@@ -7,7 +7,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import { productsContext } from '../../contexts/productsContext';
 const ProductCard = ({ item }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { deleteProduct } = useContext(productsContext)
     return (
         <Card sx={{ maxWidth: 300, margin: "20px" }}>
