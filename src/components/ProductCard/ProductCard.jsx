@@ -1,14 +1,18 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import { productsContext } from '../../contexts/productsContext';
+import { cardContext } from '../../contexts/cardContext';
+
 const ProductCard = ({ item }) => {
     const navigate = useNavigate();
     const { deleteProduct } = useContext(productsContext)
+    const { addProductToCart, checkProductInCart } = useContext(cardContext)
+    const [checkProduct, setCheckProduct] = useState(checkProductInCart(item))
     return (
         <Card sx={{ maxWidth: 300, margin: "20px" }}>
             <CardMedia
@@ -29,10 +33,24 @@ const ProductCard = ({ item }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={() => deleteProduct(item.id)} size="small"><DeleteIcon /></Button>
-                <Button size="small" onClick={() => navigate(`/edit/${item.id}`)}><EditIcon></EditIcon></Button>
-                <Button size="small" ><AddShoppingCartIcon></AddShoppingCartIcon></Button>
-                <Button size="small" onClick={() => navigate(`/products/${item.id}`)}><MoreHorizIcon></MoreHorizIcon></Button>
+                <Button onClick={() => deleteProduct(item.id)} size="small">
+                    <DeleteIcon />
+                </Button>
+                <Button size="small" onClick={() => navigate(`/edit/${item.id}`)}>
+                    <EditIcon></EditIcon>
+                </Button>
+                <Button onClick={() => {
+                    addProductToCart(item);
+                    setCheckProduct(checkProductInCart(item))
+                }} size="small" >
+                    <AddShoppingCartIcon
+                        color={checkProduct ? "secondary" : "primary"}
+                    // style={{ color: checkProduct ? "red" : "black" }} 
+                    />
+                </Button>
+                <Button size="small" onClick={() => navigate(`/products/${item.id}`)}>
+                    <MoreHorizIcon></MoreHorizIcon>
+                </Button>
             </CardActions>
         </Card>
     );

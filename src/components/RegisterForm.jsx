@@ -5,6 +5,7 @@ import { Alert, Button, Typography } from '@mui/material';
 import { authContext } from '../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
 
+
 const RegisterForm = () => {
     const { signUp, error } = useContext(authContext)
     const navigate = useNavigate('')
