@@ -14,14 +14,19 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { authContext } from '../contexts/authContext';
-import { Link } from '@mui/material';
+// import { Link } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
+import { Link } from 'react-router-dom';
+import { cardContext } from '../contexts/cardContext';
+import { useContext, useEffect } from 'react';
 export default function PrimarySearchAppBar() {
 
     const { currentUser, logOut } = React.useContext(authContext)
     // console.log(currentUser);
-
+    const { count, getCart } = useContext(cardContext)
+    React.useEffect(() => {
+        getCart()
+    }, [])
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -72,7 +77,7 @@ export default function PrimarySearchAppBar() {
                         handleMenuClose();
                         logOut()
                     }}>Logout</MenuItem>) :
-                (<Link href='/login'><MenuItem
+                (<Link to='/login'><MenuItem
                     onClick={() => {
                         handleMenuClose();
                     }}>LogIn</MenuItem>
@@ -160,17 +165,22 @@ export default function PrimarySearchAppBar() {
                             <Badge badgeContent={4} color="error">
                                 <MailIcon />
                             </Badge>
+
                         </IconButton>
+                        <Link to="/cart">
+                            <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={count} color="error">
+                                    <AddShoppingCartIcon />
+                                </Badge>
+
+                            </IconButton>
+                        </Link>
                         <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={1} color="error">
-                                <AddShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
+
                             size="large"
                             edge="end"
                             aria-label="account of current user"
@@ -198,6 +208,6 @@ export default function PrimarySearchAppBar() {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
-        </Box>
+        </Box >
     );
 }

@@ -2,14 +2,14 @@ import React, { useReducer } from "react";
 export const cardContext = React.createContext();
 
 const INIT_STATE = {
-    cart:{},
+    cart:null,
     count: 0,
 }
 
 function reducer(state = INIT_STATE, action){
     switch(action.type){
         case "GET_CART": 
-        return {...state, cart: action.payload};
+        return {...state, cart: action.payload,count: action.payload.products.length};
         default: 
         return state
     }
@@ -44,6 +44,7 @@ if(isProductInCart){
       localStorage.setItem('cart',JSON.stringify(cart))
     //   console.log(cart);
     //   console.log(products)
+    getCart()
   }
   function checkProductInCart(products){
     let cart = JSON.parse(localStorage.getItem('cart'));
@@ -52,13 +53,30 @@ if(isProductInCart){
             products: [],
             totalPrice: 0
         }
-    }
+    };
     let isProductInCart = cart.products.some((item)=> item.item.id === products.id );
     return isProductInCart;
   }
 
+  function getCart(){
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    if(!cart){
+        cart = {
+            products: [],
+            totalPrice: 0
+        }
+    };
+    dispatch({
+        type: "GET_CART",
+        payload: cart,
+    })
+  }
+// console.log(state.count);
 
 
-    return (<cardContext.Provider value={{addProductToCart,checkProductInCart}}>{children}</cardContext.Provider>)
+    return (<cardContext.Provider value={ { 
+        cart: state.cart,
+        count: state.count,
+        addProductToCart,checkProductInCart,  getCart}}>{children}</cardContext.Provider>)
 }
 export default CardContextProvider;

@@ -10,7 +10,7 @@ import Card from './components/Card';
 
 const Routing = () => {
     return (
-        <BrowserRouter>
+        // <BrowserRouter>
         <Routes>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/register' element={<RegisterForm/>}/>
@@ -23,7 +23,7 @@ const Routing = () => {
 
 
         </Routes>
-        </BrowserRouter>
+        // </BrowserRouter>
             
         
     );
