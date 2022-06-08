@@ -34,6 +34,14 @@ const RegisterForm = () => {
             <Button onClick={handleValues} variant="contained" href="#contained-buttons" style={{ width: "30%", margin: "15px" }}>
                 Sign up
             </Button>
+            <Typography variant="p" component="h2">
+                Already have an account?
+            </Typography>
+            <Typography
+                onClick={() => navigate('/login')}
+                variant="p" color={"primary"} style={{ cursor: "pointer" }} component="h2">
+                Log in
+            </Typography>
         </Box>
     );
 };

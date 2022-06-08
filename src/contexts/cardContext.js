@@ -18,6 +18,8 @@ function reducer(state = INIT_STATE, action){
 
 const CardContextProvider = ({children})=>{
   const[state, dispatch] = useReducer(reducer, INIT_STATE)
+
+
   function addProductToCart(products){
       let cart = JSON.parse(localStorage.getItem('cart'));
       if(!cart){
@@ -33,6 +35,7 @@ const CardContextProvider = ({children})=>{
       }
       let isProductInCart = cart.products.some((item)=> item.item.id === products.id )
 if(isProductInCart){
+    // для удаления
     cart.products = cart.products.filter(item => item.item.id
 !== products.id)
 }else{
@@ -65,18 +68,41 @@ if(isProductInCart){
             products: [],
             totalPrice: 0
         }
-    };
+    };  
+    cart.totalPrice = cart.products.reduce((prev, curr)=> prev + curr.subPrice, 0)
     dispatch({
-        type: "GET_CART",
+        type: "GET_CART", 
         payload: cart,
     })
   }
-// console.log(state.count);
+    function changeProductCount(count, id){
+      if(count <=0 ){
+          count=1;
+      }  
+      let cart = JSON.parse(localStorage.getItem('cart'));
+    cart.products = cart.products.map(item => {
+        if(item.item.id === id){
+            item.count = count;
+            item.subPrice  = item.item.price * item.count;
+        }
+        return item;
+    })
+localStorage.setItem('cart', JSON.stringify(cart));
+getCart();
+    }
 
+ function deleteFromCart(id){
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      cart.products = cart.products.filter(item => item.item.id
+        !== id);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('CART');
+getCart();
+ }
 
     return (<cardContext.Provider value={ { 
         cart: state.cart,
         count: state.count,
-        addProductToCart,checkProductInCart,  getCart}}>{children}</cardContext.Provider>)
+        addProductToCart,checkProductInCart,  getCart, changeProductCount, deleteFromCart}}>{children}</cardContext.Provider>)
 }
 export default CardContextProvider;

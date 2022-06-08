@@ -16,7 +16,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { authContext } from '../contexts/authContext';
 // import { Link } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cardContext } from '../contexts/cardContext';
 import { useContext, useEffect } from 'react';
 export default function PrimarySearchAppBar() {
@@ -27,6 +27,8 @@ export default function PrimarySearchAppBar() {
     React.useEffect(() => {
         getCart()
     }, [])
+    const navigate = useNavigate();
+
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -141,22 +143,27 @@ export default function PrimarySearchAppBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        style={{ cursor: "pointer" }}
+                        sx={{ display: { xs: 'none', sm: 'block' } }} marginRight='35px'
+                        onClick={() => navigate('/')}
                     >
-                        MUI
+                        Home
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        style={{ cursor: "pointer" }}
+                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        marginRight='35px'
+                        onClick={() => navigate('/products')}
+                    >
+                        Products
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />
